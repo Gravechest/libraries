@@ -2,9 +2,18 @@
 #include <math.h>
 
 typedef struct{
-	float x;
-	float y;	
-	float z;
+	union{
+		float x;
+		float r;
+	};
+	union{
+		float y;
+		float g;
+	};
+	union{
+		float z;
+		float b;
+	};
 }VEC3;
 
 inline void VEC3add(VEC3 *p,float d){
@@ -56,6 +65,34 @@ inline VEC3 VEC3divR(VEC3 p,float d){
 	p.x /= d;
 	p.y /= d;
 	p.z /= d;
+	return p;
+}
+
+inline VEC3 VEC3addFR(VEC3 p,float d){
+	p.x = d + p.x;
+	p.y = d + p.y;
+	p.z = d + p.z;
+	return p;
+}
+
+inline VEC3 VEC3subFR(VEC3 p,float d){
+	p.x = d - p.x;
+	p.y = d - p.y;
+	p.z = d - p.z;
+	return p;
+}
+
+inline VEC3 VEC3mulFR(VEC3 p,float d){
+	p.x = d * p.x;
+	p.y = d * p.y;
+	p.z = d * p.z;
+	return p;
+}
+
+inline VEC3 VEC3divFR(VEC3 p,float d){
+	p.x = d / p.x;
+	p.y = d / p.y;
+	p.z = d / p.z;
 	return p;
 }
 
@@ -143,6 +180,36 @@ inline VEC3 VEC3normalize(VEC3 p){
 	p.y /= w;
 	p.z /= w;
 	return p;
+}
+
+inline VEC3 VEC3absR(VEC3 p){
+	if(p.x < 0.0f){
+		p.x = -p.x;
+	}
+	if(p.y < 0.0f){
+		p.y = -p.y;
+	}
+	if(p.z < 0.0f){
+		p.z = -p.z;
+	}
+	return p;
+}
+
+inline VEC3 VEC3maxR(VEC3 p,float p2){
+	if(p2 > p.x){
+		p.x = p2;
+	}
+	if(p2 > p.y){
+		p.y = p2;
+	}
+	if(p2 > p.z){
+		p.z = p2;
+	}
+	return p;
+}
+
+inline VEC3 VEC3fractR(VEC3 p){
+	return (VEC3){p.x-(int)p.x,p.y-(int)p.y,p.z-(int)p.z};
 }
 
 
